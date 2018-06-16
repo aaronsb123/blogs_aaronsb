@@ -1,0 +1,23 @@
+---
+title: "About Me"
+author: "Aaron Balleisen"
+date: 2018-06-16T21:13:14-10:00
+categories: ["R"]
+tags: ["Balleisen", "data science", "iXperience"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# Overview
+
+Hello! My name is Aaron Balleisen, and I am currently a rising sophomore at Princeton Univesrity. I grew up in Durham, North Carolina where I graduated from Riverside High School last year. I am planning to study economics and computer science as my primary concentrations, with an emphasis on statistics and machine learning. This summer, I have travelled to Cape Town, South Africa for an eight week program on data science -- a sort of crash course on many of the statistical tools data scientists use in the everyday projects of their profession. I am learning R, SQL, Python, and some html/css as part of the class. Next week, I will begin a four-week internship at Where Is My Transport, a local company that attempts to model the routes of informal transportaion services in less developed countries. I will get a chance to apply many of the skills I am learning in class, including programming in R, SQL, and Python as well as designing predictive models and applying machine learning algorithms.
+
+# Interests
+
+I love strategy and logic, having played chess competitively all my life. I am interested in game theory and behavioral economics, and I am fascinated by the possibilities of machine learning and artificial intelligence as technologies continue to evolve. I closely follow most professional sports, which has played a role in debveloping my love of statistics, and I am also passionate about politics, world affairs, and music.
+
+# This Blog
+
+I plan to use this blog to showcase some of the work I have done with data science. The first couple entries will include a report on a scRabble helper package I helped design and implement in R, and an overview on my modelling efforts in a kaggle competition. I may add additional examples of my work in the future.

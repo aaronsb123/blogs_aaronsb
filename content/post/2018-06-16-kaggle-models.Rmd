@@ -1,0 +1,15 @@
+---
+title: Kaggle Models
+author: "Aaron Balleisen"
+date: '2018-06-16'
+slug: kaggle-models
+categories: []
+tags: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# Kaggle Competition
+
