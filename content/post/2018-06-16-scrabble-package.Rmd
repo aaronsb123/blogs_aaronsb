@@ -13,4 +13,40 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 # Project Overview
 
-My partner Stacy Kam and I were tasked with building a unique R package to perform a series of functions. We decided to make a package called scRabble, which would n
+My partner Stacy Kam and I were tasked with building a unique R package to perform a series of functions. We decided to make a package called scRabble, which would serve as a helper package for scrabble players or anyone looking for anagrams of a series of letters.
+
+Our package can be installed with the following command:
+
+```{r message=FALSE, warning=FALSE}
+devtools::install_github("staceaileen/scRabble")
+library(scRabble)
+```
+
+The **get_words()** function takes two arguments, a string of letters and an integer word length (which defaults to a wildcard). It returns all the possible words of the specified length.
+
+```{r}
+get_words("aertdol", 5) # only returns five letter words
+get_words("aylllew") # returns all possible words
+```
+
+The **points()** function takes four arguments: a string of letters, a vector with the locations of all of the letter multipliers (defaulted to a vector of 1s), a integer value of double word multipliers and an integer value for the number of tripple word multipliers. It returns the number of points that the word will score, using the official scrabble letter values.
+
+```{r message=FALSE, warning=FALSE}
+points("hello")
+points("hello", c(1,1,2,1,2), dw = 1)
+points("hello", c(3,1,1,1,1), tw = 1)
+```
+
+The **num_words()** function returns the number of possible words from a string of letters.
+
+```{r}
+num_words("aartowc")
+```
+
+The **is_word()** function takes a string of letters and outputs whether or not that string makes up an english word.
+
+```{r message=FALSE, warning=FALSE}
+is_word("hello")
+is_word("hellololol")
+```
+

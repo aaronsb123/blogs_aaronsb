@@ -1,7 +1,7 @@
 ---
 title: Kaggle Models
 author: "Aaron Balleisen"
-date: '2018-06-16'
+date: '2018-06-17'
 slug: kaggle-models
 categories: []
 tags: []
