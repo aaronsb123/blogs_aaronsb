@@ -11,4 +11,18 @@ tags: []
 
 <div id="kaggle-competition" class="section level1">
 <h1>Kaggle Competition</h1>
+<p>To practice developing machine-learning models to build predictive algorithms, I have been working on a Kaggle Competition called Home Credit Default Risk. The goal of the competition is to develop the best model at predicting which loan applicants are most likely to be at risk of defaulting. Over 100 columns of data are provided about each applicant in the training dataset, and the “TARGET” column stores a 0 or 1 value corresponding to whether or not the subject proved to ultimately risk defaulting. More information about the competition and the datasets can be found here: <a href="https://www.kaggle.com/c/home-credit-default-risk" class="uri">https://www.kaggle.com/c/home-credit-default-risk</a></p>
+</div>
+<div id="my-approach" class="section level1">
+<h1>My Approach</h1>
+<p>My first attempts focussed on building a decision tree from all of the data. I improved on this approach by using a random-forrest, which aggregates the outputs of several smaller decision trees. More recently, I have been using gradient boosting, with the xgboost method in the caret library of R. I am currently in the process of tuning my parameters and performing repeated cross-validation, with the goal of obtaining the highest possible ROC as I can.</p>
+<p>Before I did too much exploring with different types of models, I built a series of functions to mask the details of loading the data files, creating the model, and applying it to testing data to make predictions. There are several benifits to this higher level of abstraction, which makes it easier to make edits without having to worry about forgetting to make the same change in other sections of my script. With my code well-organized, it is straighforward to make modifications as I continue to develop my algorithm.</p>
+</div>
+<div id="my-current-model" class="section level1">
+<h1>My Current Model</h1>
+<p>Here is the most recent iterration of my code. There are comments at various points to illustrate some of my thought-process as I continue to approach the challenge.</p>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next Steps</h1>
+<p>I am currently trying to figure out how best to decide which columns to consider in my model and which ones to delete. My most recent idea is to use a logistic regression to find the p-value coefficients for each column, to see how significant they are in the mapping of the data to the predictions. I would then tune my model by deleting columns with a p-value above a certain threshold. In addition to these steps, I will continue to tune xgboost through the caret functionality.</p>
 </div>

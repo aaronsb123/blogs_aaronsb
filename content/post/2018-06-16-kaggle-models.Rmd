@@ -13,3 +13,108 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 # Kaggle Competition
 
+To practice developing machine-learning models to build predictive algorithms, I have been working on a Kaggle Competition called Home Credit Default Risk. The goal of the competition is to develop the best model at predicting which loan applicants are most likely to be at risk of defaulting. Over 100 columns of data are provided about each applicant in the training dataset, and the "TARGET" column stores a 0 or 1 value corresponding to whether or not the subject proved to ultimately risk defaulting. More information about the competition and the datasets can be found here: https://www.kaggle.com/c/home-credit-default-risk
+
+# My Approach
+
+My first attempts focussed on building a decision tree from all of the data. I improved on this approach by using a random-forrest, which aggregates the outputs of several smaller decision trees. More recently, I have been using gradient boosting, with the xgboost method in the caret library of R. I am currently in the process of tuning my parameters and performing repeated cross-validation, with the goal of obtaining the highest possible ROC as I can.
+
+Before I did too much exploring with different types of models, I built a series of functions to mask the details of loading the data files, creating the model, and applying it to testing data to make predictions. There are several benifits to this higher level of abstraction, which makes it easier to make edits without having to worry about forgetting to make the same change in other sections of my script. With my code well-organized, it is straighforward to make modifications as I continue to develop my algorithm.
+
+# My Current Model
+
+Here is the most recent iterration of my code. There are comments at various points to illustrate some of my thought-process as I continue to approach the challenge.
+
+```{r xgboost model, eval=FALSE, include=FALSE}
+train <- "application_train.csv"
+test <- "application_test.csv"
+
+load_libraries <- function() {
+  library(dplyr)
+  library(vcdExtra)
+  library(ISLR)
+  library(rpart)
+  library(party)
+  library(partykit)
+  library(rpart.plot)
+  library(ggplot2)
+  library(readr)
+  library(caret)
+  library(zoo)
+}
+    
+load_application <- function(filename) {
+  dataset <- read.csv(filename) %>%
+    select(
+      -contains("FLAG_DOCUMENT"),
+      -(APARTMENTS_AVG:EMERGENCYSTATE_MODE), # delete a range of columns
+      -(FLAG_MOBIL:FLAG_EMAIL)
+    )
+  for (i in 1:ncol(dataset)) {     # imputes NAs, better to do this each time you cross validate
+    if (sum(is.na(dataset[,i])) > 0) { # if number of NAs in column is > 0
+      dataset[,i][is.na(dataset[,i])] <- median(dataset[,i], na.rm = T) # replace NAs with median
+    }
+  }
+  dataset
+}
+  
+apply_tree <- function(model, dataset) {
+  predictions <- predict(model, dataset, type = "prob")$yes
+  format <- dataset %>%
+    select(SK_ID_CURR) %>%
+    mutate(
+      TARGET = predictions
+    )
+}
+    
+write_submission <- function(formatted_dataset, number) {
+  file <- write.csv(formatted_dataset, paste0("submission", number, "_aaronsb.csv"), row.names = FALSE)
+}
+
+load_libraries()
+
+set.seed(137)
+
+df <- load_application(train) %>%
+  na.omit()
+# choose an equal amount of defaults and no-defaults for model building (remove bias)
+df_defaulted <- df %>%
+  filter(df$TARGET == 1)
+df_no_default <- df %>%
+  filter(df$TARGET == 0)
+df_sample <- df_defaulted[sample(nrow(df_defaulted), 20000), ] %>%
+  rbind(df_no_default[sample(nrow(df_no_default), 20000),])
+df_sample$TARGET <-factor(df_sample$TARGET, levels = c(1,0), labels = c("yes", "no"))
+fit <- train(TARGET ~ ., data = df_sample, method = "xgbTree" , 
+             tuneGrid = expand.grid(
+               nrounds = 20,
+               max_depth = 3,
+               eta = .35,
+               gamma = 1,
+               colsample_bytree = .55,
+               min_child_weight = 8,
+               subsample = 0.25
+             ),
+             metric = "ROC",
+             # preProcess = "medianImpute",
+             # na.action = na.pass,
+             trControl = trainControl(
+               method = "repeatedcv",
+               number = 20,
+               repeats = 5,
+               classProbs = TRUE,
+               summaryFunction = twoClassSummary,
+               verboseIter = TRUE
+             ))
+fit$results
+
+test_dat <- load_application(test)
+applied <- apply_tree(fit, test_dat)
+sub_num <- 19
+file <- write_submission(applied, sub_num)
+```
+
+# Next Steps
+
+I am currently trying to figure out how best to decide which columns to consider in my model and which ones to delete. My most recent idea is to use a logistic regression to find the p-value coefficients for each column, to see how significant they are in the mapping of the data to the predictions. I would then tune my model by deleting columns with a p-value above a certain threshold. In addition to these steps, I will continue to tune xgboost through the caret functionality.
+
