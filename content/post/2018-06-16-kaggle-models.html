@@ -21,6 +21,92 @@ tags: []
 <div id="my-current-model" class="section level1">
 <h1>My Current Model</h1>
 <p>Here is the most recent iterration of my code. There are comments at various points to illustrate some of my thought-process as I continue to approach the challenge.</p>
+<pre class="r"><code># train &lt;- &quot;application_train.csv&quot;
+# test &lt;- &quot;application_test.csv&quot;
+# 
+# load_libraries &lt;- function() {
+#   library(dplyr)
+#   library(vcdExtra)
+#   library(ISLR)
+#   library(rpart)
+#   library(party)
+#   library(partykit)
+#   library(rpart.plot)
+#   library(ggplot2)
+#   library(readr)
+#   library(caret)
+#   library(zoo)
+# }
+#     
+# load_application &lt;- function(filename) {
+#   dataset &lt;- read.csv(filename) %&gt;%
+#     select(
+#       -contains(&quot;FLAG_DOCUMENT&quot;),
+#       -(APARTMENTS_AVG:EMERGENCYSTATE_MODE), # delete a range of columns
+#       -(FLAG_MOBIL:FLAG_EMAIL)
+#     )
+#   for (i in 1:ncol(dataset)) {     # imputes NAs, better to do this each time you cross validate
+#     if (sum(is.na(dataset[,i])) &gt; 0) { # if number of NAs in column is &gt; 0
+#       dataset[,i][is.na(dataset[,i])] &lt;- median(dataset[,i], na.rm = T) # replace NAs with median
+#     }
+#   }
+#   dataset
+# }
+#   
+# apply_tree &lt;- function(model, dataset) {
+#   predictions &lt;- predict(model, dataset, type = &quot;prob&quot;)$yes
+#   format &lt;- dataset %&gt;%
+#     select(SK_ID_CURR) %&gt;%
+#     mutate(
+#       TARGET = predictions
+#     )
+# }
+#     
+# write_submission &lt;- function(formatted_dataset, number) {
+#   file &lt;- write.csv(formatted_dataset, paste0(&quot;submission&quot;, number, &quot;_aaronsb.csv&quot;), row.names = FALSE)
+# }
+# 
+# load_libraries()
+# 
+# set.seed(137)
+# 
+# # df &lt;- load_application(train) %&gt;%
+# #   na.omit()
+# # choose an equal amount of defaults and no-defaults for model building (remove bias)
+# df_defaulted &lt;- df %&gt;%
+#   filter(df$TARGET == 1)
+# df_no_default &lt;- df %&gt;%
+#   filter(df$TARGET == 0)
+# df_sample &lt;- df_defaulted[sample(nrow(df_defaulted), 20000), ] %&gt;%
+#   rbind(df_no_default[sample(nrow(df_no_default), 20000),])
+# df_sample$TARGET &lt;-factor(df_sample$TARGET, levels = c(1,0), labels = c(&quot;yes&quot;, &quot;no&quot;))
+# fit &lt;- train(TARGET ~ ., data = df_sample, method = &quot;xgbTree&quot; , 
+#              tuneGrid = expand.grid(
+#                nrounds = 20,
+#                max_depth = 3,
+#                eta = .35,
+#                gamma = 1,
+#                colsample_bytree = .55,
+#                min_child_weight = 8,
+#                subsample = 0.25
+#              ),
+#              metric = &quot;ROC&quot;,
+#              # preProcess = &quot;medianImpute&quot;,
+#              # na.action = na.pass,
+#              trControl = trainControl(
+#                method = &quot;repeatedcv&quot;,
+#                number = 20,
+#                repeats = 5,
+#                classProbs = TRUE,
+#                summaryFunction = twoClassSummary,
+#                verboseIter = TRUE
+#              ))
+# fit$results
+# 
+# test_dat &lt;- load_application(test)
+# applied &lt;- apply_tree(fit, test_dat)
+# sub_num &lt;- 19
+# file &lt;- write_submission(applied, sub_num)</code></pre>
 </div>
 <div id="next-steps" class="section level1">
 <h1>Next Steps</h1>

@@ -10,7 +10,7 @@ tags: ["Balleisen", "data science", "iXperience"]
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, out.width = 300}
 knitr::include_graphics("/images/fb_profile.png")
 ```
 
