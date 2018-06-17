@@ -1,3 +1,3 @@
 Readme.md
 
-This is my readme file to store the url.
+This blog is hosted at the following url: https://aaronsb-datascience-blogs.netlify.com/
