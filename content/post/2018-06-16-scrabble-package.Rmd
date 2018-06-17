@@ -15,12 +15,16 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 My partner Stacy Kam and I were tasked with building a unique R package to perform a series of functions. We decided to make a package called scRabble, which would serve as a helper package for scrabble players or anyone looking for anagrams of a series of letters.
 
+# Installation
+
 Our package can be installed with the following command:
 
 ```{r message=FALSE, warning=FALSE}
 devtools::install_github("staceaileen/scRabble")
 library(scRabble)
 ```
+
+# Functionality
 
 The **get_words()** function takes two arguments, a string of letters and an integer word length (which defaults to a wildcard). It returns all the possible words of the specified length.
 

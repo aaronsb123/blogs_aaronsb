@@ -12,22 +12,28 @@ tags: []
 <div id="project-overview" class="section level1">
 <h1>Project Overview</h1>
 <p>My partner Stacy Kam and I were tasked with building a unique R package to perform a series of functions. We decided to make a package called scRabble, which would serve as a helper package for scrabble players or anyone looking for anagrams of a series of letters.</p>
+</div>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
 <p>Our package can be installed with the following command:</p>
 <pre class="r"><code>devtools::install_github(&quot;staceaileen/scRabble&quot;)
 library(scRabble)</code></pre>
+</div>
+<div id="functionality" class="section level1">
+<h1>Functionality</h1>
 <p>The <strong>get_words()</strong> function takes two arguments, a string of letters and an integer word length (which defaults to a wildcard). It returns all the possible words of the specified length.</p>
 <pre class="r"><code>get_words(&quot;aertdol&quot;, 5) # only returns five letter words
-##  [1] &quot;dealt&quot; &quot;older&quot; &quot;tared&quot; &quot;tread&quot; &quot;trade&quot; &quot;dater&quot; &quot;rated&quot; &quot;derat&quot;
-##  [9] &quot;adore&quot; &quot;oared&quot; &quot;oread&quot; &quot;toled&quot; &quot;lader&quot; &quot;alder&quot; &quot;dotal&quot; &quot;doter&quot;
-## [17] &quot;trode&quot; &quot;lated&quot; &quot;delta&quot; &quot;tardo&quot; &quot;oater&quot; &quot;orate&quot; &quot;ratel&quot; &quot;alter&quot;
-## [25] &quot;later&quot; &quot;taler&quot; &quot;artel&quot; &quot;tolar&quot; &quot;alert&quot;
+##  [1] &quot;tardo&quot; &quot;dotal&quot; &quot;oread&quot; &quot;oared&quot; &quot;adore&quot; &quot;trode&quot; &quot;doter&quot; &quot;alder&quot;
+##  [9] &quot;lader&quot; &quot;toled&quot; &quot;tared&quot; &quot;tread&quot; &quot;trade&quot; &quot;dater&quot; &quot;rated&quot; &quot;derat&quot;
+## [17] &quot;lated&quot; &quot;delta&quot; &quot;dealt&quot; &quot;older&quot; &quot;oater&quot; &quot;orate&quot; &quot;artel&quot; &quot;taler&quot;
+## [25] &quot;later&quot; &quot;alter&quot; &quot;ratel&quot; &quot;alert&quot; &quot;tolar&quot;
 get_words(&quot;aylllew&quot;) # returns all possible words
-##  [1] &quot;leally&quot; &quot;wally&quot;  &quot;welly&quot;  &quot;alley&quot;  &quot;allyl&quot;  &quot;yawl&quot;   &quot;waly&quot;  
-##  [8] &quot;wyle&quot;   &quot;well&quot;   &quot;wall&quot;   &quot;weal&quot;   &quot;ally&quot;   &quot;wale&quot;   &quot;yell&quot;  
-## [15] &quot;lall&quot;   &quot;leal&quot;   &quot;way&quot;    &quot;yaw&quot;    &quot;yew&quot;    &quot;wye&quot;    &quot;law&quot;   
-## [22] &quot;aye&quot;    &quot;wae&quot;    &quot;awe&quot;    &quot;yea&quot;    &quot;awl&quot;    &quot;lye&quot;    &quot;ley&quot;   
-## [29] &quot;lay&quot;    &quot;lea&quot;    &quot;ale&quot;    &quot;ell&quot;    &quot;all&quot;    &quot;we&quot;     &quot;aw&quot;    
-## [36] &quot;ya&quot;     &quot;ay&quot;     &quot;ye&quot;     &quot;ae&quot;     &quot;el&quot;     &quot;la&quot;     &quot;al&quot;</code></pre>
+##  [1] &quot;leally&quot; &quot;wally&quot;  &quot;welly&quot;  &quot;allyl&quot;  &quot;alley&quot;  &quot;wyle&quot;   &quot;waly&quot;  
+##  [8] &quot;yawl&quot;   &quot;yell&quot;   &quot;weal&quot;   &quot;wale&quot;   &quot;wall&quot;   &quot;well&quot;   &quot;ally&quot;  
+## [15] &quot;leal&quot;   &quot;lall&quot;   &quot;yew&quot;    &quot;way&quot;    &quot;yaw&quot;    &quot;wye&quot;    &quot;lye&quot;   
+## [22] &quot;aye&quot;    &quot;awl&quot;    &quot;ley&quot;    &quot;law&quot;    &quot;yea&quot;    &quot;awe&quot;    &quot;lay&quot;   
+## [29] &quot;wae&quot;    &quot;lea&quot;    &quot;ale&quot;    &quot;all&quot;    &quot;ell&quot;    &quot;ye&quot;     &quot;we&quot;    
+## [36] &quot;aw&quot;     &quot;ya&quot;     &quot;ay&quot;     &quot;al&quot;     &quot;el&quot;     &quot;ae&quot;     &quot;la&quot;</code></pre>
 <p>The <strong>points()</strong> function takes four arguments: a string of letters, a vector with the locations of all of the letter multipliers (defaulted to a vector of 1s), a integer value of double word multipliers and an integer value for the number of tripple word multipliers. It returns the number of points that the word will score, using the official scrabble letter values.</p>
 <pre class="r"><code>points(&quot;hello&quot;)
 ## [1] 8
